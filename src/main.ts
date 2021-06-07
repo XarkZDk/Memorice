@@ -6,8 +6,8 @@ import scanf from 'scanf'
 import initBoard from "./modules/initBoard"
 import generateHiddenBoard, { auxBoard } from "./modules/generateHiddenBoard"
 import { getValue, getCoords } from "./modules/workInBoard"
-import { maxPts, showValue, delay, reemplaceCard, hideCard, valuePosition } from "./modules/functions"
-import { board, matrix, pair } from "./modules/types&class"
+import { maxPts, delay, valuePosition } from "./modules/functions"
+import { board, MemoriceBoard, Card } from "./modules/types&class"
 export const correct:string = "✔"
 
 /*
@@ -17,15 +17,11 @@ export const correct:string = "✔"
 let Play = () => {
 
     //Pedir tamaño de la matriz, nos encargamos que se cumpla la condición
-    console.log("Ingrese el tamaño de la matriz (2,4,6,8)\n")
+    console.log("Ingrese el tamaño de la matriz(2,4,6,8)\n")
 
     let size: number = scanf("%d")
 
-    function esPar(x:any):x is pair {
-        return x
-    }
-    
-    if(esPar(size))
+    if(size == 2||size == 4||size == 6||size == 8)
     {
         
         let player_points:number = 0 
@@ -39,48 +35,35 @@ let Play = () => {
         let aux_matrix:board = []
         auxBoard(aux_matrix,size)
 
-        console.table(hidden_matrix)
-
         //Matriz original
-        let matrix:matrix = { 
-            size:size,
-            cards:initBoard(size),
-            maxpoint:maxPts(size)
-        }       
-        
-         while(running){
+        let matrix = new MemoriceBoard (size,initBoard(size),maxPts(size),hidden_matrix)
+        matrix.Render       
 
+        while(running){
             //Ingresar el número de casilla
+            let position1 = valuePosition(aux_matrix,size,hidden_matrix)
+            let card1 = new Card (position1,getValue(position1,size,matrix),getCoords(position1,size)) 
+                // position2:number = 0
+            matrix.ShowValue(1,card1.coord,card1.value)
             
-            let position1:number = 0,
-                position2:number = 0
-                
-                position1 = valuePosition(position1,aux_matrix,size,hidden_matrix)
-                let card_value1:string = getValue(position1,size,matrix)
-                let coord1:number[] = getCoords(position1,size)
-                showValue(card_value1,coord1,hidden_matrix,1) // Primera carta     
-        
-            
-            position2 = valuePosition(position1,aux_matrix,size,hidden_matrix)
+            let position2 = valuePosition(aux_matrix,size,hidden_matrix)
 
-            if(position1 != position2 ){
-                let card_value2:string = getValue(position2,size,matrix)
-                let coord2:number[] = getCoords(position2,size)
-                showValue(card_value2,getCoords(position2,size),hidden_matrix,2) // Segunda carta
-
+            if(position1 != position2){
+                let card2 = new Card (position2,getValue(position2,size,matrix),getCoords(position2,size))
+                matrix.ShowValue(2,card2.coord,card2.value)
                 
-                if(card_value1 == card_value2){
+                if(card1.value == card2.value){
                     console.log("Acertaste!")
                     player_points++
-                    reemplaceCard(hidden_matrix,coord1,coord2,correct)
+                    matrix.ReemplaceCard(card1.coord,card2.coord,correct)
                 }
                 else{
                     console.log("Incorrecto!")
                     delay(2)
                     console.clear()
-                    hideCard(hidden_matrix,coord1,position1)
-                    hideCard(hidden_matrix,coord2,position2)
-                    console.table(hidden_matrix)            
+                    matrix.HideCard(card1.coord,position1)
+                    matrix.HideCard(card2.coord,position2)
+                    matrix.Render       
                 }
 
                 if(player_points == matrix.maxpoint){
@@ -100,8 +83,8 @@ let Play = () => {
             else{
                 console.clear()
                 console.log("No puedes elegir la misma carta! \n")
-                hideCard(hidden_matrix,coord1,position1)
-                console.table(hidden_matrix)
+                matrix.HideCard(card1.coord,position1)
+                matrix.Render
             }
         }
                 

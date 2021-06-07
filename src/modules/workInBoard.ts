@@ -1,4 +1,4 @@
-import { matrix } from "./types&class"
+import { coordinate, matrix } from "./types&class"
 
 // => Function 1 = trabajar con coordenadas
 
@@ -13,7 +13,7 @@ export function getValue (position:number,size:number,matrix:matrix):string {
 
 // => Function 2 = trabajar con coordenadas
 
-export function getCoords (position:number,size:number):number[] {
+export function getCoords (position:number,size:number):coordinate {
     let x,y
     
     x = Math.trunc((position-1) / size) 
