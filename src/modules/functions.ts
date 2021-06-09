@@ -1,17 +1,11 @@
-// ====== Imports ======
-
 import  scanf  from "scanf"
 import { correct } from "../main"
-
-// => Function 1 = retornar Max pts ============================
 
 export function maxPts(size:number):number {
     return (size*size)/2
 }
 
-// => Function 2 = Retornar posición ============================
-
-export function valuePosition(aux_matrix:any[],size:number,hidden_matrix:any[]):number {
+export function valuePosition(aux_matrix:any[],size:number,hidden_matrix:any[]):number { //Nos retorna el valor de la carta
     let question:boolean = true;
     let position = 0
     while(question){
@@ -42,7 +36,7 @@ export function valuePosition(aux_matrix:any[],size:number,hidden_matrix:any[]):
     return position
 }
 
-// => Function 3 = Delay ============================
+//============//
 
 export function delay (seconds:number):void {
     var waitTill = new Date(new Date().getTime() + seconds * 1000);

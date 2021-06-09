@@ -1,7 +1,4 @@
 "use strict";
-/*
-<========================= | IMPORTS & EXPORTS | =========================>
-*/
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -33,20 +30,18 @@ var workInBoard_1 = require("./modules/workInBoard");
 var functions_1 = require("./modules/functions");
 var types_class_1 = require("./modules/types&class");
 exports.correct = "✔";
-/*
-<========================= | CODE | =========================>
-*/
 var Play = function () {
     //Pedir tamaño de la matriz, nos encargamos que se cumpla la condición
-    console.log("Ingrese el tamaño de la matriz(2,4,6,8)\n");
+    console.log("Ingrese el tamaño de la matriz (2,4,6,8)\n");
     var size = scanf_1.default("%d");
     if (size == 2 || size == 4 || size == 6 || size == 8) {
         var player_points = 0;
+        var attempts = 0;
         var running = true;
         //Creamos matriz oculta, ( Se mostrará al usuario y utilizaremos para modificar valores ) 
         var hidden_matrix = [];
         generateHiddenBoard_1.default(hidden_matrix, size);
-        //Creamos matriz oculta, ( La utilizaremos para obtener la casilla )
+        //Creamos matriz oculta de comodín, ( La utilizaremos para obtener las posiciones )
         var aux_matrix = [];
         generateHiddenBoard_1.auxBoard(aux_matrix, size);
         //Matriz original
@@ -56,42 +51,48 @@ var Play = function () {
             //Ingresar el número de casilla
             var position1 = functions_1.valuePosition(aux_matrix, size, hidden_matrix);
             var card1 = new types_class_1.Card(position1, workInBoard_1.getValue(position1, size, matrix), workInBoard_1.getCoords(position1, size));
-            // position2:number = 0
             matrix.ShowValue(1, card1.coord, card1.value);
             var position2 = functions_1.valuePosition(aux_matrix, size, hidden_matrix);
             if (position1 != position2) {
                 var card2 = new types_class_1.Card(position2, workInBoard_1.getValue(position2, size, matrix), workInBoard_1.getCoords(position2, size));
                 matrix.ShowValue(2, card2.coord, card2.value);
                 if (card1.value == card2.value) {
-                    console.log("Acertaste!");
+                    functions_1.delay(1);
                     player_points++;
+                    attempts++;
                     matrix.ReemplaceCard(card1.coord, card2.coord, exports.correct);
+                    matrix.Message("Acertaste!");
                 }
                 else {
-                    console.log("Incorrecto!");
+                    attempts++;
+                    matrix.Message("Incorrecto!");
                     functions_1.delay(2);
-                    console.clear();
+                    matrix.Clear;
                     matrix.HideCard(card1.coord, position1);
                     matrix.HideCard(card2.coord, position2);
                     matrix.Render;
                 }
                 if (player_points == matrix.maxpoint) {
-                    console.log("======================================\n¡ GANASTE !\n======================================\n¿Quieres volver a jugar? pulse 1 para continuar");
+                    functions_1.delay(1);
+                    matrix.Clear;
+                    matrix.Message("Puntos: " + player_points);
+                    matrix.Message("Intentos: " + attempts);
+                    matrix.Message("======================================\n¡ GANASTE !\n======================================\n¿Quieres volver a jugar? pulse 1 para continuar");
                     var again = scanf_1.default("%d");
                     if (again == 1) {
                         running = false;
-                        console.clear();
+                        matrix.Clear;
                         Play();
                     }
                     else {
-                        console.log("Fin del juego");
+                        matrix.Message("Fin del juego");
                         running = false;
                     }
                 }
             }
             else {
-                console.clear();
-                console.log("No puedes elegir la misma carta! \n");
+                matrix.Clear;
+                matrix.Message("No puedes elegir la misma carta! \n");
                 matrix.HideCard(card1.coord, position1);
                 matrix.Render;
             }

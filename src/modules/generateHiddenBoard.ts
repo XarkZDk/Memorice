@@ -13,7 +13,7 @@ export default function generateHiddenBoard (hidd_mat:any[],size:pair):void {
     }  
 }
         
-export function auxBoard(hidd_mat:any[],size:pair) { //Se utilizará para casos excepcionales, como ocultar las cartas erroneas y mostrar su posición
+export function auxBoard(hidd_mat:any[],size:pair):void { //Se utilizará para casos excepcionales, como ocultar las cartas erroneas y mostrar su posición
     let aux:number = 0
     
     for (let i:number = 0; i < size; i++){

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Card = exports.MemoriceBoard = void 0;
+//============//
 var MemoriceBoard = /** @class */ (function () {
     function MemoriceBoard(size, cards, maxpoint, hiddenBoard) {
         this.size = 2;
@@ -19,9 +20,19 @@ var MemoriceBoard = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(MemoriceBoard.prototype, "Clear", {
+        get: function () {
+            return console.clear();
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MemoriceBoard.prototype.Message = function (m) {
+        return console.log(m);
+    };
     MemoriceBoard.prototype.ShowValue = function (turn, coord, value) {
         this.hiddenBoard[coord[0]].splice(coord[1], 1, value);
-        console.log("Turno " + turn);
+        this.Message("Turno " + turn);
         this.Render;
     };
     MemoriceBoard.prototype.ReemplaceCard = function (coord1, coord2, status) {
@@ -35,10 +46,11 @@ var MemoriceBoard = /** @class */ (function () {
     return MemoriceBoard;
 }());
 exports.MemoriceBoard = MemoriceBoard;
+//============//
 var Card = /** @class */ (function () {
     function Card(position, value, coord) {
         this.position = 0;
-        this.value = "EMPTY";
+        this.value = "";
         this.coord = [0, 0];
         this.position = position;
         this.value = value;

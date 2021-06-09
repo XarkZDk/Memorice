@@ -1,5 +1,4 @@
 "use strict";
-// ====== Imports ======
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -7,12 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.delay = exports.valuePosition = exports.maxPts = void 0;
 var scanf_1 = __importDefault(require("scanf"));
 var main_1 = require("../main");
-// => Function 1 = retornar Max pts ============================
 function maxPts(size) {
     return (size * size) / 2;
 }
 exports.maxPts = maxPts;
-// => Function 2 = Retornar posición ============================
 function valuePosition(aux_matrix, size, hidden_matrix) {
     var question = true;
     var position = 0;
@@ -41,7 +38,7 @@ function valuePosition(aux_matrix, size, hidden_matrix) {
     return position;
 }
 exports.valuePosition = valuePosition;
-// => Function 3 = Delay ============================
+//============//
 function delay(seconds) {
     var waitTill = new Date(new Date().getTime() + seconds * 1000);
     while (waitTill > new Date()) {
