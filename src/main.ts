@@ -6,9 +6,8 @@ import { maxPts, delay, valuePosition } from "./modules/functions"
 import { board, MemoriceBoard, Card } from "./modules/types&class"
 export const correct:string = "✔"
 
-
-let Play = () => {
-
+let startGame:boolean = true
+while(startGame){
     //Pedir tamaño de la matriz, nos encargamos que se cumpla la condición
     console.log("Ingrese el tamaño de la matriz (2,4,6,8)\n")
 
@@ -67,17 +66,9 @@ let Play = () => {
                     matrix.Clear
                     matrix.Message(`Puntos: ${player_points}`)
                     matrix.Message(`Intentos: ${attempts}`)
-                    matrix.Message("======================================\n¡ GANASTE !\n======================================\n¿Quieres volver a jugar? pulse 1 para continuar")
-                    let again:number = scanf("%d")
-                    if(again == 1){
-                        running = false
-                        matrix.Clear
-                        Play()
-                    }
-                    else{
-                        matrix.Message("Fin del juego")
-                        running = false
-                    } 
+                    matrix.Message("======================================\n¡ GANASTE !\n======================================\n")
+                    running = false
+                    startGame = false
                 }
             }
             else{
@@ -88,10 +79,21 @@ let Play = () => {
             }
         }    
     }
-    else
-    {
-        console.error("Solo puede colocar un tamaño de 2, 4, 6, 8\n")
-        Play()
+
+    else console.error("Solo puede colocar un tamaño de 2, 4, 6, 8\n")
+
+    if(!startGame){
+        console.log("Quieres volver a jugar?, pulse 1 para aceptar")
+        
+        let repeat:number = scanf("%d")
+        if(repeat == 1) {    
+            console.clear()
+            startGame = true
+        }
+        else {
+            console.log("Fin del juego")
+            startGame = false
+        }
     }
 }
-Play()
+   

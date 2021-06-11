@@ -30,7 +30,8 @@ var workInBoard_1 = require("./modules/workInBoard");
 var functions_1 = require("./modules/functions");
 var types_class_1 = require("./modules/types&class");
 exports.correct = "✔";
-var Play = function () {
+var startGame = true;
+while (startGame) {
     //Pedir tamaño de la matriz, nos encargamos que se cumpla la condición
     console.log("Ingrese el tamaño de la matriz (2,4,6,8)\n");
     var size = scanf_1.default("%d");
@@ -75,17 +76,9 @@ var Play = function () {
                     matrix.Clear;
                     matrix.Message("Puntos: " + player_points);
                     matrix.Message("Intentos: " + attempts);
-                    matrix.Message("======================================\n¡ GANASTE !\n======================================\n¿Quieres volver a jugar? pulse 1 para continuar");
-                    var again = scanf_1.default("%d");
-                    if (again == 1) {
-                        running = false;
-                        matrix.Clear;
-                        Play();
-                    }
-                    else {
-                        matrix.Message("Fin del juego");
-                        running = false;
-                    }
+                    matrix.Message("======================================\n¡ GANASTE !\n======================================\n");
+                    running = false;
+                    startGame = false;
                 }
             }
             else {
@@ -96,9 +89,18 @@ var Play = function () {
             }
         }
     }
-    else {
+    else
         console.error("Solo puede colocar un tamaño de 2, 4, 6, 8\n");
-        Play();
+    if (!startGame) {
+        console.log("Quieres volver a jugar?, pulse 1 para aceptar");
+        var repeat = scanf_1.default("%d");
+        if (repeat == 1) {
+            console.clear();
+            startGame = true;
+        }
+        else {
+            console.log("Fin del juego");
+            startGame = false;
+        }
     }
-};
-Play();
+}
