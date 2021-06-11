@@ -42,17 +42,15 @@ var Play = function () {
         var hidden_matrix = [];
         generateHiddenBoard_1.default(hidden_matrix, size);
         //Creamos matriz oculta de comodín, ( La utilizaremos para obtener las posiciones )
-        var aux_matrix = [];
-        generateHiddenBoard_1.auxBoard(aux_matrix, size);
         //Matriz original
         var matrix = new types_class_1.MemoriceBoard(size, initBoard_1.default(size), functions_1.maxPts(size), hidden_matrix);
         matrix.Render;
         while (running) {
             //Ingresar el número de casilla
-            var position1 = functions_1.valuePosition(aux_matrix, size, hidden_matrix);
+            var position1 = functions_1.valuePosition(generateHiddenBoard_1.obtainPosition([size - 1, size - 1], size), size, hidden_matrix);
             var card1 = new types_class_1.Card(position1, workInBoard_1.getValue(position1, size, matrix), workInBoard_1.getCoords(position1, size));
             matrix.ShowValue(1, card1.coord, card1.value);
-            var position2 = functions_1.valuePosition(aux_matrix, size, hidden_matrix);
+            var position2 = functions_1.valuePosition(generateHiddenBoard_1.obtainPosition([size - 1, size - 1], size), size, hidden_matrix);
             if (position1 != position2) {
                 var card2 = new types_class_1.Card(position2, workInBoard_1.getValue(position2, size, matrix), workInBoard_1.getCoords(position2, size));
                 matrix.ShowValue(2, card2.coord, card2.value);

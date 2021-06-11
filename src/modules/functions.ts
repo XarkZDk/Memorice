@@ -5,7 +5,7 @@ export function maxPts(size:number):number {
     return (size*size)/2
 }
 
-export function valuePosition(aux_matrix:any[],size:number,hidden_matrix:any[]):number { //Nos retorna el valor de la carta
+export function valuePosition(biggerNum:number,size:number,hidden_matrix:any[]):number { //Nos retorna el valor de la carta
     let question:boolean = true;
     let position = 0
     while(question){
@@ -19,7 +19,7 @@ export function valuePosition(aux_matrix:any[],size:number,hidden_matrix:any[]):
             y = (size - ((x+1)*size - position))-1
             
             //---
-            let checkIt:boolean = position <= aux_matrix[aux_matrix.length-1][aux_matrix.length-1] //Que no sea mayor al ultimo numero
+            let checkIt:boolean = position <= biggerNum //Que no sea mayor al ultimo numero (es la última casilla)
             && position > 0 
             && hidden_matrix[x][y] != correct
             //---

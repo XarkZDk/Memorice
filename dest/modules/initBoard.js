@@ -37,8 +37,7 @@ function initBoard(size) {
     ];
     arrSymbols = ObtainFruit(arrSymbols);
     var sizeMatrix = Math.sqrt(arrSymbols.length);
-    arrSymbols = shuffle(arrSymbols);
-    arrSymbols = putInArr(arrSymbols);
+    arrSymbols = putInArr(shuffle(arrSymbols));
     return arrSymbols;
     function ObtainFruit(array) {
         var nArray = [];

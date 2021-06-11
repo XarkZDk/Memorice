@@ -10,7 +10,7 @@ function maxPts(size) {
     return (size * size) / 2;
 }
 exports.maxPts = maxPts;
-function valuePosition(aux_matrix, size, hidden_matrix) {
+function valuePosition(biggerNum, size, hidden_matrix) {
     var question = true;
     var position = 0;
     while (question) {
@@ -21,7 +21,7 @@ function valuePosition(aux_matrix, size, hidden_matrix) {
             x = Math.trunc((position - 1) / size);
             y = (size - ((x + 1) * size - position)) - 1;
             //---
-            var checkIt = position <= aux_matrix[aux_matrix.length - 1][aux_matrix.length - 1] //Que no sea mayor al ultimo numero
+            var checkIt = position <= biggerNum //Que no sea mayor al ultimo numero (es la última casilla)
                 && position > 0
                 && hidden_matrix[x][y] != main_1.correct;
             //---

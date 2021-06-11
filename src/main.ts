@@ -1,6 +1,6 @@
 import scanf from 'scanf'
 import initBoard from "./modules/initBoard"
-import generateHiddenBoard, { auxBoard } from "./modules/generateHiddenBoard"
+import generateHiddenBoard, { obtainPosition } from "./modules/generateHiddenBoard"
 import { getValue, getCoords } from "./modules/workInBoard"
 import { maxPts, delay, valuePosition } from "./modules/functions"
 import { board, MemoriceBoard, Card } from "./modules/types&class"
@@ -27,8 +27,6 @@ let Play = () => {
         generateHiddenBoard(hidden_matrix,size)
 
         //Creamos matriz oculta de comodín, ( La utilizaremos para obtener las posiciones )
-        let aux_matrix:board = []
-        auxBoard(aux_matrix,size)
 
         //Matriz original
         let matrix = new MemoriceBoard (size,initBoard(size),maxPts(size),hidden_matrix)
@@ -36,11 +34,11 @@ let Play = () => {
 
         while(running){
             //Ingresar el número de casilla
-            let position1 = valuePosition(aux_matrix,size,hidden_matrix)
+            let position1 = valuePosition(obtainPosition([size-1,size-1],size),size,hidden_matrix)
             let card1 = new Card (position1,getValue(position1,size,matrix),getCoords(position1,size)) 
             matrix.ShowValue(1,card1.coord,card1.value)
             
-            let position2 = valuePosition(aux_matrix,size,hidden_matrix)
+            let position2 = valuePosition(obtainPosition([size-1,size-1],size),size,hidden_matrix)
 
             if(position1 != position2){
 
